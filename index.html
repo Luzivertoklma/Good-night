@@ -25,15 +25,32 @@
     .text {
       font-size: clamp(24px, 6vw, 72px);
       letter-spacing: 0.02em;
+      text-shadow: 0 0 10px white;
+    }
+
+    /* Bintang statis */
+    .star-static {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: twinkle 2s infinite alternate;
+    }
+
+    @keyframes twinkle {
+      from { opacity: 0.3; }
+      to { opacity: 1; }
     }
 
     /* Bintang jatuh */
-    .star {
+    .shooting-star {
       position: absolute;
       width: 2px;
-      height: 80px;
+      height: 100px;
       background: linear-gradient(white, transparent);
-      opacity: 0.8;
+      opacity: 0.9;
       transform: rotate(45deg);
       animation: fall 2s linear forwards;
     }
@@ -56,9 +73,22 @@
   </div>
 
   <script>
-    function createStar() {
+    // Bintang statis
+    function createStaticStars(num) {
+      for (let i = 0; i < num; i++) {
+        const star = document.createElement("div");
+        star.classList.add("star-static");
+        star.style.left = Math.random() * window.innerWidth + "px";
+        star.style.top = Math.random() * window.innerHeight + "px";
+        star.style.animationDuration = (1 + Math.random() * 3) + "s";
+        document.body.appendChild(star);
+      }
+    }
+
+    // Bintang jatuh
+    function createShootingStar() {
       const star = document.createElement("div");
-      star.classList.add("star");
+      star.classList.add("shooting-star");
       star.style.left = Math.random() * window.innerWidth + "px";
       document.body.appendChild(star);
 
@@ -67,7 +97,9 @@
       }, 2000);
     }
 
-    setInterval(createStar, 800); // tiap 0.8 detik ada bintang jatuh baru
+    // Generate bintang
+    createStaticStars(200); // jumlah bintang statis
+    setInterval(createShootingStar, 3000); // tiap 3 detik ada bintang jatuh
   </script>
 </body>
 </html>

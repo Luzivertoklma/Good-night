@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Good night</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: #000;
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      overflow: hidden;
+    }
+    .center {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .text {
+      font-size: clamp(24px, 6vw, 72px);
+      letter-spacing: 0.02em;
+      text-shadow: 0 0 10px white;
+    }
+
+    /* Bintang statis */
+    .star-static {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: twinkle 2s infinite alternate;
+    }
+
+    @keyframes twinkle {
+      from { opacity: 0.3; }
+      to { opacity: 1; }
+    }
+
+    /* Bintang jatuh */
+    .shooting-star {
+      position: absolute;
+      width: 2px;
+      height: 100px;
+      background: linear-gradient(white, transparent);
+      opacity: 0.9;
+      transform: rotate(45deg);
+      animation: fall 2s linear forwards;
+    }
+
+    @keyframes fall {
+      from {
+        transform: translateY(-100px) translateX(0) rotate(45deg);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(100vh) translateX(200px) rotate(45deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="center">
+    <div class="text">Good night</div>
+  </div>
+
+  <script>
+    // Bintang statis
+    function createStaticStars(num) {
+      for (let i = 0; i < num; i++) {
+        const star = document.createElement("div");
+        star.classList.add("star-static");
+        star.style.left = Math.random() * window.innerWidth + "px";
+        star.style.top = Math.random() * window.innerHeight + "px";
+        star.style.animationDuration = (1 + Math.random() * 3) + "s";
+        document.body.appendChild(star);
+      }
+    }
+
+    // Bintang jatuh
+    function createShootingStar() {
+      const star = document.createElement("div");
+      star.classList.add("shooting-star");
+      star.style.left = Math.random() * window.innerWidth + "px";
+      document.body.appendChild(star);
+
+      setTimeout(() => {
+        star.remove();
+      }, 2000);
+    }
+
+    // Generate bintang
+    createStaticStars(200); // jumlah bintang statis
+    setInterval(createShootingStar, 3000); // tiap 3 detik ada bintang jatuh
+  </script>
+</body>
+</html>

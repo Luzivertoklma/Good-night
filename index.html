@@ -11,6 +11,7 @@
       background: #000;
       color: #fff;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      overflow: hidden;
     }
     .center {
       height: 100%;
@@ -18,10 +19,34 @@
       align-items: center;
       justify-content: center;
       text-align: center;
+      position: relative;
+      z-index: 1;
     }
     .text {
       font-size: clamp(24px, 6vw, 72px);
       letter-spacing: 0.02em;
+    }
+
+    /* Bintang jatuh */
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 80px;
+      background: linear-gradient(white, transparent);
+      opacity: 0.8;
+      transform: rotate(45deg);
+      animation: fall 2s linear forwards;
+    }
+
+    @keyframes fall {
+      from {
+        transform: translateY(-100px) translateX(0) rotate(45deg);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(100vh) translateX(200px) rotate(45deg);
+        opacity: 0;
+      }
     }
   </style>
 </head>
@@ -29,5 +54,20 @@
   <div class="center">
     <div class="text">Good night</div>
   </div>
+
+  <script>
+    function createStar() {
+      const star = document.createElement("div");
+      star.classList.add("star");
+      star.style.left = Math.random() * window.innerWidth + "px";
+      document.body.appendChild(star);
+
+      setTimeout(() => {
+        star.remove();
+      }, 2000);
+    }
+
+    setInterval(createStar, 800); // tiap 0.8 detik ada bintang jatuh baru
+  </script>
 </body>
 </html>
